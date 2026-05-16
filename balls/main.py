@@ -108,11 +108,15 @@ while True:
             print("отгадал")
             
     if len(found) == 4:
-        order_x = [idx for idx, _ in sorted(found.items(), key=lambda item: item[1][0])]
-        order_y = [idx for idx, _ in sorted(found.items(), key=lambda item: item[1][1])]
-        print(order)
+        by_y = sorted(found.items(), key=lambda item: item[1][1])
+        top = sorted(by_y[:2], key=lambda item: item[1][0])
+        bot = sorted(by_y[2:], key=lambda item: item[1][0])
+
+        order = [idx for idx, _ in top + bot]
+
+        # print(order)
         
-        if order_x == secret or order_y == secret:
+        if order == secret:
             print("отгадал")
         
 with (save_path / "config.json").open("w") as f:
